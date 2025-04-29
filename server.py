@@ -7,7 +7,6 @@ from mcp.server.fastmcp import FastMCP
 mcp = FastMCP(
     name="weather",
     host="0.0.0.0",  # only used for SSE transport (localhost)
-    port=80,  # only used for SSE transport (set this to any port)
 )
 
 # Constants
