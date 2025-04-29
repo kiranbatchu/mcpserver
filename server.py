@@ -1,6 +1,10 @@
 from typing import Any
 import httpx
 from mcp.server.fastmcp import FastMCP
+import os
+from sqlalchemy import create_engine, text
+import json
+
 
 
 # Create an MCP server
@@ -93,6 +97,31 @@ async def get_forecast(latitude: float, longitude: float) -> str:
         forecasts.append(forecast)
 
     return "\n---\n".join(forecasts)
+
+
+POSTGRES_USER = "postgres"
+POSTGRES_PASSWORD = "postgres123"
+POSTGRES_HOST = "postgres-db-v1.cbkaui220ofp.us-east-2.rds.amazonaws.com"
+POSTGRES_PORT = "5432"
+POSTGRES_DB = "call_transcripts"
+
+DATABASE_URL = f"postgresql+psycopg2://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_HOST}:{POSTGRES_PORT}/{POSTGRES_DB}"
+engine = create_engine(DATABASE_URL)
+
+
+@mcp.tool()
+async def get_call_details(id: int) -> str:
+
+    with engine.connect() as conn:
+        result = conn.execute(text("""
+            SELECT *
+            FROM raw_transcripts
+        """))
+        columns = result.keys()
+        rows = [dict(zip(columns, row)) for row in result.fetchall()]
+    return rows
+
+
 
 # Run the server
 if __name__ == "__main__":
