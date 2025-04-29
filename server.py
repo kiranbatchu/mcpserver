@@ -116,15 +116,23 @@ async def get_call_details(id: int) -> str:
     Args:
         id: caller id
     """
+
+    call_details = []
     with engine.connect() as conn:
         result = conn.execute(text("""
             SELECT *
             FROM raw_transcripts
-        """))
+            WHERE id = :id
+        """),{"id": id})
         columns = result.keys()
         rows = [dict(zip(columns, row)) for row in result.fetchall()]
         print(rows)
-    return rows
+
+        for column in columns:  # Only show next 5 periods
+            call_details_str = f"{column} : {rows[0][column]}"
+            call_details.append(call_details_str)
+        print("\n---\n".join(call_details))
+    return "\n---\n".join(call_details)
 
 
 
