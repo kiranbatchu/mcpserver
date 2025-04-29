@@ -31,7 +31,7 @@ async def main():
 
             # Call our Weather tool
             result = await session.call_tool("get_call_details", arguments={"id":"0"})
-            print(f"The weather alerts are = {result.content[0].text}")
+            print(f"The call details are = {result.content[0].text}")
 
 
 if __name__ == "__main__":
