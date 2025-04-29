@@ -111,7 +111,11 @@ engine = create_engine(DATABASE_URL)
 
 @mcp.tool()
 async def get_call_details(id: int) -> str:
+    """Get call transcripts details for  id
 
+    Args:
+        id: caller id
+    """
     with engine.connect() as conn:
         result = conn.execute(text("""
             SELECT *
