@@ -18,7 +18,7 @@ uv run server.py
 
 async def main():
     # Connect to the server using SSE
-    async with sse_client("http://localhost:8000/sse") as (read_stream, write_stream):
+    async with sse_client("https://mcpserver-bbqq.onrender.com/sse") as (read_stream, write_stream):
         async with ClientSession(read_stream, write_stream) as session:
             # Initialize the connection
             await session.initialize()
@@ -30,7 +30,7 @@ async def main():
                 print(f"  - {tool.name}: {tool.description}")
 
             # Call our Weather tool
-            result = await session.call_tool("get_alerts", arguments={"state":"CA"})
+            result = await session.call_tool("get_call_details", arguments={"id":"0"})
             print(f"The weather alerts are = {result.content[0].text}")
 
 
