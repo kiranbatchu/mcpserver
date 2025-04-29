@@ -123,6 +123,7 @@ async def get_call_details(id: int) -> str:
         """))
         columns = result.keys()
         rows = [dict(zip(columns, row)) for row in result.fetchall()]
+        print(rows)
     return rows
 
 
