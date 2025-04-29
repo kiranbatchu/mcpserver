@@ -15,7 +15,7 @@ COPY server.py .
 COPY client-sse.py .
 
 # Expose the port the server runs on
-EXPOSE 8000
+EXPOSE 80
 
 # Command to run the server
 CMD ["uv", "run", "server.py"] 
